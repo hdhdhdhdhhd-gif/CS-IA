@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroPlanner - Energy-Based Task Management</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 NeuroPlanner</h1>
+            <p class="subtitle">Plan your day based on your energy</p>
+        </header>
+
+        <!-- Energy Input Section -->
+        <section class="energy-section">
+            <h2>Today's Energy Level</h2>
+            <div class="energy-input">
+                <div class="energy-buttons">
+                    <button class="energy-btn" data-energy="1">1<br><span>Very Low</span></button>
+                    <button class="energy-btn" data-energy="2">2<br><span>Low</span></button>
+                    <button class="energy-btn" data-energy="3">3<br><span>Medium</span></button>
+                    <button class="energy-btn" data-energy="4">4<br><span>High</span></button>
+                    <button class="energy-btn" data-energy="5">5<br><span>Very High</span></button>
+                </div>
+                <p class="energy-display">Current Energy: <strong id="current-energy">Not set</strong></p>
+            </div>
+        </section>
+
+        <!-- Ordered Task List Section -->
+        <section class="task-list-section">
+            <h2>Your Daily Plan</h2>
+            <div id="task-list-container">
+                <p class="empty-message">Set your energy level to see your optimized task order</p>
+            </div>
+        </section>
+
+        <!-- Add Task Form Section -->
+        <section class="add-task-section">
+            <h2>Add New Task</h2>
+            <form id="task-form">
+                <div class="form-group">
+                    <label for="task-name">Task Name *</label>
+                    <input type="text" id="task-name" placeholder="e.g., Prepare lunch" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-category">Category *</label>
+                    <select id="task-category" required>
+                        <option value="">Select a category</option>
+                        <option value="cooking">🍳 Cooking</option>
+                        <option value="cleaning">🧹 Cleaning</option>
+                        <option value="gym">💪 Gym</option>
+                        <option value="paperwork">📄 Paperwork</option>
+                        <option value="other">📌 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-energy">Energy Required (1-5) *</label>
+                        <select id="task-energy" required>
+                            <option value="">Select energy</option>
+                            <option value="1">1 - Very Low</option>
+                            <option value="2">2 - Low</option>
+                            <option value="3">3 - Medium</option>
+                            <option value="4">4 - High</option>
+                            <option value="5">5 - Very High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-priority">Priority (Optional)</label>
+                        <select id="task-priority">
+                            <option value="">No priority</option>
+                            <option value="1">1 - Most Important</option>
+                            <option value="2">2 - Important</option>
+                            <option value="3">3 - Less Important</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Add Task</button>
+            </form>
+        </section>
+
+        <!-- Feedback Section -->
+        <section class="feedback-section">
+            <h2>Daily Plan Feedback</h2>
+            <p>How efficient was today's plan?</p>
+            <div class="star-rating">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            <p class="rating-display">Rating: <strong id="current-rating">Not rated</strong></p>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section">
+            <div class="history-header">
+                <h2>Task History</h2>
+                <button id="toggle-history" class="btn-secondary">Show History</button>
+            </div>
+            <div id="history-container" class="hidden">
+                <p class="empty-message">No completed tasks yet</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Edit Task</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-task-id">
+                
+                <div class="form-group">
+                    <label for="edit-task-name">Task Name *</label>
+                    <input type="text" id="edit-task-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-task-category">Category *</label>
+                    <select id="edit-task-category" required>
+                        <option value="cooking">🍳 Cooking</option>
+                        <option value="cleaning">🧹 Cleaning</option>
+                        <option value="gym">💪 Gym</option>
+                        <option value="paperwork">📄 Paperwork</option>
+                        <option value="other">📌 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-task-energy">Energy Required *</label>
+                        <select id="edit-task-energy" required>
+                            <option value="1">1 - Very Low</option>
+                            <option value="2">2 - Low</option>
+                            <option value="3">3 - Medium</option>
+                            <option value="4">4 - High</option>
+                            <option value="5">5 - Very High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-task-priority">Priority</label>
+                        <select id="edit-task-priority">
+                            <option value="">No priority</option>
+                            <option value="1">1 - Most Important</option>
+                            <option value="2">2 - Important</option>
+                            <option value="3">3 - Less Important</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="button" id="cancel-edit" class="btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
